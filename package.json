@@ -8,6 +8,7 @@
 		"name": "jQuery Foundation and other contributors",
 		"url": "https://github.com/jquery/jquery-ui/blob/master/AUTHORS.txt"
 	},
+	"dojoBuild": "profile.build.js",
 	"maintainers": [
 		{
 			"name": "Scott González",
