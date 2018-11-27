@@ -5,18 +5,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Selectmenu - Custom Rendering</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
-	<script src="../../jquery.js"></script>
-	<script src="../../ui/core.js"></script>
-	<script src="../../ui/widget.js"></script>
-	<script src="../../ui/position.js"></script>
-	<script src="../../ui/menu.js"></script>
-	<script src="../../ui/selectmenu.js"></script>
 	<link rel="stylesheet" href="../demos.css">
-	<script>
-	$(function() {
+	<script src="../../external/requirejs/require.js"></script>
+	<script src="../bootstrap.js">
 		$.widget( "custom.iconselectmenu", $.ui.selectmenu, {
 			_renderItem: function( ul, item ) {
-				var li = $( "<li>", { text: item.label } );
+				var li = $( "<li>" ),
+					wrapper = $( "<div>", { text: item.label } );
 
 				if ( item.disabled ) {
 					li.addClass( "ui-state-disabled" );
@@ -26,9 +21,9 @@
 					style: item.element.attr( "data-style" ),
 					"class": "ui-icon " + item.element.attr( "data-class" )
 				})
-					.appendTo( li );
+					.appendTo( wrapper );
 
-				return li.appendTo( ul );
+				return li.append( wrapper ).appendTo( ul );
 			}
 		});
 
@@ -46,11 +41,10 @@
 			.iconselectmenu()
 			.iconselectmenu( "menuWidget")
 				.addClass( "ui-menu-icons avatar" );
-	});
 	</script>
 	<style>
 		h2 {
-			margin: 30px 0 0 0
+			margin: 30px 0 0 0;
 		}
 		fieldset {
 			border: 0;
@@ -58,12 +52,9 @@
 		label {
 			display: block;
 		}
-		select {
-			width: 200px;
-		}
 
 		/* select with custom icons */
-		.ui-selectmenu-menu .ui-menu.customicons .ui-menu-item {
+		.ui-selectmenu-menu .ui-menu.customicons .ui-menu-item-wrapper {
 			padding: 0.5em 0 0.5em 3em;
 		}
 		.ui-selectmenu-menu .ui-menu.customicons .ui-menu-item .ui-icon {

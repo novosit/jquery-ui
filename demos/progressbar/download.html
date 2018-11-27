@@ -2,20 +2,12 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Progressbar - Download Dialog</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
-	<script src="../../jquery.js"></script>
-	<script src="../../ui/core.js"></script>
-	<script src="../../ui/widget.js"></script>
-	<script src="../../ui/progressbar.js"></script>
-	<script src="../../ui/mouse.js"></script>
-	<script src="../../ui/draggable.js"></script>
-	<script src="../../ui/button.js"></script>
-	<script src="../../ui/position.js"></script>
-	<script src="../../ui/dialog.js"></script>
 	<link rel="stylesheet" href="../demos.css">
-	<script>
-	$(function() {
+	<script src="../../external/requirejs/require.js"></script>
+	<script src="../bootstrap.js" data-modules="dialog">
 		var progressTimer,
 			progressbar = $( "#progressbar" ),
 			progressLabel = $( ".progress-label" ),
@@ -59,7 +51,7 @@
 					text: "Close",
 					click: closeDownload
 				}]);
-				$(".ui-dialog button").last().focus();
+				$(".ui-dialog button").last().trigger( "focus" );
 			}
 		});
 
@@ -81,9 +73,8 @@
 			progressbar.progressbar( "value", false );
 			progressLabel
 				.text( "Starting download..." );
-			downloadButton.focus();
+			downloadButton.trigger( "focus" );
 		}
-	});
 	</script>
 	<style>
 	#progressbar {

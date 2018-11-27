@@ -5,15 +5,27 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Selectmenu - Product Selection</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
-	<script src="../../jquery.js"></script>
-	<script src="../../ui/core.js"></script>
-	<script src="../../ui/widget.js"></script>
-	<script src="../../ui/position.js"></script>
-	<script src="../../ui/menu.js"></script>
-	<script src="../../ui/selectmenu.js"></script>
 	<link rel="stylesheet" href="../demos.css">
-	<script>
-	$(function() {
+	<style>
+		fieldset {
+			border: 0;
+			margin-left: 300px;
+		}
+		label {
+			display: block;
+			margin: 20px 0 0 0;
+		}
+
+		#circle {
+			float: left;
+			background: yellow;
+			border-radius: 50%;
+			width: 150px;
+			height: 150px;
+		}
+	</style>
+	<script src="../../external/requirejs/require.js"></script>
+	<script src="../bootstrap.js">
 		var circle = $( "#circle" );
 
 		$( "#radius" ).selectmenu({
@@ -30,29 +42,7 @@
 				 circle.css( "background", data.item.value );
 			 }
 		 });
-	});
 	</script>
-	<style>
-		fieldset {
-			border: 0;
-			margin-left: 300px;
-		}
-		label {
-			display: block;
-			margin: 20px 0 0 0;
-		}
-		select {
-			width: 200px;
-		}
-
-		#circle {
-			float: left;
-			background: yellow;
-			border-radius: 50%;
-			width: 150px;
-			height: 150px;
-		}
-	</style>
 </head>
 <body>
 

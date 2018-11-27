@@ -4,31 +4,29 @@
 	<meta charset="utf-8">
 	<title>Tooltip Visual Test: Default</title>
 	<link rel="stylesheet" href="../../../themes/base/all.css">
-	<script src="../../../jquery.js"></script>
-	<script src="../../../ui/core.js"></script>
-	<script src="../../../ui/widget.js"></script>
-	<script src="../../../ui/position.js"></script>
-	<script src="../../../ui/button.js"></script>
-	<script src="../../../ui/tooltip.js"></script>
 	<style>
 	.group {
 		margin-top: 2em;
 	}
 	</style>
-	<script>
-	$(function() {
+	<script src="../../../external/requirejs/require.js"></script>
+	<script src="../../../demos/bootstrap.js" data-modules="button">
 		// default
 		$( "#context1, form, #childish, #nested-input" ).tooltip();
 
-		// custom class, replaces ui-widget-content
+		// Custom class, replaces ui-widget-content
 		$( "#context2" ).tooltip({
-			tooltipClass: "ui-widget-header"
+			classes: {
+				"ui-tooltip": "ui-corner-all ui-widget-header"
+			}
 		});
 		$( "#right1" ).tooltip({
-			tooltipClass: "ui-state-error"
+			classes: {
+				"ui-tooltip": "ui-corner-all ui-state-error"
+			}
 		});
 
-		// synchronous content
+		// Synchronous content
 		$( "#footnotes" ).tooltip({
 			items: "[href^='#']",
 			content: function() {
@@ -36,7 +34,7 @@
 			}
 		});
 
-		// asynchronous content
+		// Asynchronous content
 		$( "#async" ).tooltip({
 			content: function( response ) {
 				setTimeout(function() {
@@ -46,7 +44,7 @@
 			}
 		});
 
-		// asynchronous content with caching
+		// Asynchronous content with caching
 		var content;
 		$( "#async2" ).tooltip({
 			content: function( response ) {
@@ -61,9 +59,11 @@
 			}
 		});
 
-		// custom position
+		// Custom position
 		$( "#right2" ).tooltip({
-			tooltipClass: "ui-state-highlight",
+			classes: {
+				"ui-tooltip": "ui-corner-all ui-state-highlight"
+			},
 			position: {
 				my: "center top",
 				at: "center bottom+10"
@@ -94,10 +94,9 @@
 			show: {
 				delay: 500
 			}
-		}).click(function() {
-			$( "#focus-on-me" ).focus();
+		}).on( "click", function() {
+			$( "#focus-on-me" ).trigger( "focus" );
 		});
-	});
 	</script>
 </head>
 <body>

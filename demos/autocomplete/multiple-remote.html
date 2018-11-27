@@ -2,32 +2,27 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Autocomplete - Multiple, remote</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
-	<script src="../../jquery.js"></script>
-	<script src="../../ui/core.js"></script>
-	<script src="../../ui/widget.js"></script>
-	<script src="../../ui/position.js"></script>
-	<script src="../../ui/menu.js"></script>
-	<script src="../../ui/autocomplete.js"></script>
 	<link rel="stylesheet" href="../demos.css">
 	<style>
 	.ui-autocomplete-loading {
 		background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
 	}
 	</style>
-	<script>
-	$(function() {
+	<script src="../../external/requirejs/require.js"></script>
+	<script src="../bootstrap.js">
 		function split( val ) {
 			return val.split( /,\s*/ );
 		}
 		function extractLast( term ) {
-			return split( term ).pop();
+			return split( term ).pop();
 		}
 
 		$( "#birds" )
 			// don't navigate away from the field on tab when selecting an item
-			.bind( "keydown", function( event ) {
+			.on( "keydown", function( event ) {
 				if ( event.keyCode === $.ui.keyCode.TAB &&
 						$( this ).autocomplete( "instance" ).menu.active ) {
 					event.preventDefault();
@@ -62,7 +57,6 @@
 					return false;
 				}
 			});
-	});
 	</script>
 </head>
 <body>

@@ -4,78 +4,6 @@
 	<meta charset="utf-8">
 	<title>Position Visual Test: Feedback</title>
 	<link rel="stylesheet" href="../../../themes/base/all.css">
-	<script src="../../../jquery.js"></script>
-	<script src="../../../ui/core.js"></script>
-	<script src="../../../ui/widget.js"></script>
-	<script src="../../../ui/position.js"></script>
-	<script src="../../../ui/menu.js"></script>
-	<script>
-	$(function() {
-		function using( position, feedback ) {
-			$( this )
-				.css( position )
-				.text( feedback.horizontal + " " + feedback.vertical + " " + feedback.important )
-				.removeClass( "left right top bottom center middle vertical horizontal" )
-				.addClass( feedback.horizontal )
-				.addClass( feedback.vertical )
-				.addClass( feedback.important );
-		}
-
-		var element = $( ".element" ),
-			target = $( "#target" ).position({
-				my: "center",
-				at: "center",
-				of: window
-			}),
-			targetOffset = target.offset(),
-			oppositeElement = element.clone().width( 50 ).appendTo( "body" ),
-			leftElement = element.clone().width( 50 ).height( 150 ).appendTo( "body" ),
-			rightElement = element.clone().height( 150 ).width( 150 ).appendTo( "body" );
-
-		$.each([
-			"center top-100",
-			"right+25 top-50",
-			"right+75 top",
-			"right+75 center",
-			"right+75 bottom",
-			"right+25 bottom+50",
-			"center bottom+100",
-			"left-25 bottom+50",
-			"left-75 bottom",
-			"left-75 center",
-			"left-75 top",
-			"left-25 top-50"
-		], function( index, direction ) {
-			element.clone().insertAfter( target ).position({
-				my: "center",
-				at: direction,
-				of: target,
-				using: using
-			});
-		});
-
-		element.width( 150 );
-		function positionWithOffset( horizontal, vertical ) {
-			return {
-				my: "left top",
-				at: "left" + (horizontal < 0 ? horizontal : "+" + horizontal) + " " +
-					"top" + (vertical < 0 ? vertical : "+" + vertical),
-				of: target,
-				using: using
-			};
-		};
-		$( document ).bind( "mousemove", function( event ) {
-			element.position( positionWithOffset(
-				event.pageX - targetOffset.left, event.pageY - targetOffset.top ) );
-			oppositeElement.position( positionWithOffset(
-				-1 * (event.pageX - targetOffset.left), -1 * (event.pageY - targetOffset.top) ) );
-			leftElement.position( positionWithOffset(
-				-0.9 * (event.pageX - targetOffset.left), 0.9 * (event.pageY - targetOffset.top) ) );
-			rightElement.position( positionWithOffset(
-				0.9 * (event.pageX - targetOffset.left), -0.9 * (event.pageY - targetOffset.top) ) );
-		});
-	});
-	</script>
 	<style>
 	#target, .element {
 		position: absolute;
@@ -135,6 +63,72 @@
 		top: 5px;
 	}
 	</style>
+	<script src="../../../external/requirejs/require.js"></script>
+	<script src="../../../demos/bootstrap.js">
+		function using( position, feedback ) {
+			$( this )
+				.css( position )
+				.text( feedback.horizontal + " " + feedback.vertical + " " + feedback.important )
+				.removeClass( "left right top bottom center middle vertical horizontal" )
+				.addClass( feedback.horizontal )
+				.addClass( feedback.vertical )
+				.addClass( feedback.important );
+		}
+
+		var element = $( ".element" ),
+			target = $( "#target" ).position({
+				my: "center",
+				at: "center",
+				of: window
+			}),
+			targetOffset = target.offset(),
+			oppositeElement = element.clone().width( 50 ).appendTo( "body" ),
+			leftElement = element.clone().width( 50 ).height( 150 ).appendTo( "body" ),
+			rightElement = element.clone().height( 150 ).width( 150 ).appendTo( "body" );
+
+		$.each([
+			"center top-100",
+			"right+25 top-50",
+			"right+75 top",
+			"right+75 center",
+			"right+75 bottom",
+			"right+25 bottom+50",
+			"center bottom+100",
+			"left-25 bottom+50",
+			"left-75 bottom",
+			"left-75 center",
+			"left-75 top",
+			"left-25 top-50"
+		], function( index, direction ) {
+			element.clone().insertAfter( target ).position({
+				my: "center",
+				at: direction,
+				of: target,
+				using: using
+			});
+		});
+
+		element.width( 150 );
+		function positionWithOffset( horizontal, vertical ) {
+			return {
+				my: "left top",
+				at: "left" + (horizontal < 0 ? horizontal : "+" + horizontal) + " " +
+					"top" + (vertical < 0 ? vertical : "+" + vertical),
+				of: target,
+				using: using
+			};
+		};
+		$( document ).on( "mousemove", function( event ) {
+			element.position( positionWithOffset(
+				event.pageX - targetOffset.left, event.pageY - targetOffset.top ) );
+			oppositeElement.position( positionWithOffset(
+				-1 * (event.pageX - targetOffset.left), -1 * (event.pageY - targetOffset.top) ) );
+			leftElement.position( positionWithOffset(
+				-0.9 * (event.pageX - targetOffset.left), 0.9 * (event.pageY - targetOffset.top) ) );
+			rightElement.position( positionWithOffset(
+				0.9 * (event.pageX - targetOffset.left), -0.9 * (event.pageY - targetOffset.top) ) );
+		});
+	</script>
 </head>
 <body>
 

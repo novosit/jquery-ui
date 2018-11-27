@@ -2,17 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Tooltip - Video Player demo</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
-	<script src="../../jquery.js"></script>
-	<script src="../../ui/core.js"></script>
-	<script src="../../ui/widget.js"></script>
-	<script src="../../ui/position.js"></script>
-	<script src="../../ui/tooltip.js"></script>
-	<script src="../../ui/button.js"></script>
-	<script src="../../ui/menu.js"></script>
-	<script src="../../ui/effect.js"></script>
-	<script src="../../ui/effect-blind.js"></script>
 	<link rel="stylesheet" href="../demos.css">
 	<style>
 	.player {
@@ -42,8 +34,8 @@
 		box-shadow: 2px 2px 5px -2px rgba(0,0,0,0.5);
 	}
 	</style>
-	<script>
-	$(function() {
+	<script src="../../external/requirejs/require.js"></script>
+	<script src="../bootstrap.js" data-modules="button controlgroup menu effect effect-blind">
 		function notify( input ) {
 			var msg = "Selected " + $.trim( input.data( "tooltip-title" ) || input.text() );
 			$( "<div>" )
@@ -74,16 +66,18 @@
 				},
 				text: !!$( this ).attr( "title" )
 			});
-			button.not( ".menu" ).click(function() {
+			button.not( ".menu" ).on( "click", function() {
 				notify( button );
 			});
 		});
-		$( ".set" ).buttonset({
-			items: "button"
+		$( ".set" ).controlgroup({
+			items: {
+				"button" : "button"
+			}
 		});
 
 		$( "button.menu" )
-			.click(function() {
+			.on( "click", function() {
 				$( document ).tooltip( "close", { currentTarget: this });
 				var menu = $( this ).next().show().position({
 					my: "left top",
@@ -115,7 +109,6 @@
 				effect: "hide"
 			}
 		});
-	});
 	</script>
 </head>
 <body>
@@ -130,10 +123,10 @@
 		<button data-icon="ui-icon-circle-plus" title="Add to Watch Later">Add to</button>
 		<button class="menu" data-icon="ui-icon-triangle-1-s">Add to favorites or playlist</button>
 		<ul>
-			<li>Favorites</li>
-			<li>Funnees</li>
+			<li><div>Favorites</div></li>
+			<li><div>Funnees</div></li>
 			<li></li>
-			<li>New playlist...</li>
+			<li><div>New playlist...</div></li>
 		</ul>
 	</div>
 	<button title="Share this video">Share</button>

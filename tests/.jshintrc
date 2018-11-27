@@ -6,7 +6,6 @@
 	"expr": true,
 	"immed": true,
 	"noarg": true,
-	"onevar": true,
 	"quotmark": "double",
 	"smarttabs": true,
 	"trailing": true,
@@ -19,24 +18,11 @@
 	"jquery": true,
 
 	"globals": {
-		"asyncTest": false,
-		"closeEnough": false,
-		"deepEqual": false,
-		"domEqual": false,
-		"equal": false,
-		"expect": false,
+		"define": false,
 		"Globalize": false,
-		"module": false,
-		"notEqual": false,
-		"notDeepEqual": false,
-		"notStrictEqual": false,
-		"ok": false,
-		"QUnit": true,
-		"start": false,
-		"strictEqual": false,
-		"stop": false,
-		"test": false,
-		"TestHelpers": true,
+		"QUnit": false,
+		"require": true,
+		"requirejs": true,
 		"JSHINT": false
 	}
 }

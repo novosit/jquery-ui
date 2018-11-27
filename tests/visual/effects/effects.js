@@ -1,35 +1,34 @@
-$(function() {
-
 var duration = 1000,
 	wait = 500;
 
 function effect( elem, name, options ) {
 	$.extend( options, {
 		easing: "easeOutQuint"
-	});
+	} );
 
-	$( elem ).click(function() {
+	$( elem ).on( "click", function() {
 		$( this )
 			.addClass( "current" )
+
 			// delaying the initial animation makes sure that the queue stays in tact
 			.delay( 10 )
 			.hide( name, options, duration )
 			.delay( wait )
 			.show( name, options, duration, function() {
 				$( this ).removeClass( "current" );
-			});
-	});
+			} );
+	} );
 }
 
-$( "#hide" ).click(function() {
+$( "#hide" ).on( "click", function() {
 	$( this )
 		.addClass( "current" )
 		.hide( duration )
 		.delay( wait )
 		.show( duration, function() {
 			$( this ).removeClass( "current" );
-		});
-});
+		} );
+} );
 
 effect( "#blindLeft", "blind", { direction: "left" } );
 effect( "#blindUp", "blind", { direction: "up" } );
@@ -57,10 +56,10 @@ effect( "#highlight", "highlight", {} );
 
 effect( "#pulsate", "pulsate", { times: 2 } );
 
-effect( "#puff", "puff", { times: 2 } );
+effect( "#puff", "puff", {} );
 effect( "#scale", "scale", {} );
 effect( "#size", "size", {} );
-$( "#sizeToggle" ).click(function() {
+$( "#sizeToggle" ).on( "click", function() {
 	var options = { to: { width: 300, height: 300 } };
 	$( this )
 		.addClass( "current" )
@@ -68,40 +67,38 @@ $( "#sizeToggle" ).click(function() {
 		.delay( wait )
 		.toggle( "size", options, duration, function() {
 			$( this ).removeClass( "current" );
-		});
-});
+		} );
+} );
 
-$( "#shake" ).click(function() {
+$( "#shake" ).on( "click", function() {
 	$( this )
 		.addClass( "current" )
 		.effect( "shake", {}, 100, function() {
 			$( this ).removeClass( "current" );
-		});
-});
+		} );
+} );
 
 effect( "#slideDown", "slide", { direction: "down" } );
 effect( "#slideUp", "slide", { direction: "up" } );
 effect( "#slideLeft", "slide", { direction: "left" } );
 effect( "#slideRight", "slide", { direction: "right" } );
 
-$( "#transfer" ).click(function() {
+$( "#transfer" ).on( "click", function() {
 	$( this )
 		.addClass( "current" )
 		.effect( "transfer", { to: "div:eq(0)" }, 1000, function() {
 			$( this ).removeClass( "current" );
-		});
-});
+		} );
+} );
 
-$( "#addClass" ).click(function() {
+$( "#addClass" ).on( "click", function() {
 	$( this ).addClass( "current", duration, function() {
 		$( this ).removeClass( "current" );
-	});
-});
-$( "#removeClass" ).click(function() {
+	} );
+} );
+$( "#removeClass" ).on( "click", function() {
 	$( this ).addClass( "current" ).removeClass( "current", duration );
-});
-$( "#toggleClass" ).click(function() {
+} );
+$( "#toggleClass" ).on( "click", function() {
 	$( this ).toggleClass( "current", duration );
-});
-
-});
+} );

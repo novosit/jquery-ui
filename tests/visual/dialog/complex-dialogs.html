@@ -4,29 +4,8 @@
 	<meta charset="utf-8">
 	<title>Dialog Visual Test</title>
 	<link rel="stylesheet" href="../../../themes/base/all.css">
-	<script src="../../../jquery.js"></script>
-	<script src="../../../ui/core.js"></script>
-	<script src="../../../ui/widget.js"></script>
-	<script src="../../../ui/mouse.js"></script>
-	<script src="../../../ui/draggable.js"></script>
-	<script src="../../../ui/position.js"></script>
-	<script src="../../../ui/resizable.js"></script>
-	<script src="../../../ui/button.js"></script>
-	<script src="../../../ui/dialog.js"></script>
-
-	<!-- stuff needed to make things complex -->
-	<script src="../../../ui/datepicker.js"></script>
-	<script src="../../../ui/menu.js"></script>
-	<script src="../../../ui/autocomplete.js"></script>
-	<script src="../../../ui/tooltip.js"></script>
-
-	<style>
-	body {
-		font-size: 62.5%;
-	}
-	</style>
-	<script>
-	$(function() {
+	<script src="../../../external/requirejs/require.js"></script>
+	<script src="../../../demos/bootstrap.js" data-modules="datepicker autocomplete tooltip">
 		var dialog = $( "#dialog" ).dialog({
 				modal: true,
 				width: 500,
@@ -62,15 +41,15 @@
 				width: 600
 			});
 
-		$( "#open-dialog" ).click(function() {
+		$( "#open-dialog" ).on( "click", function() {
 			dialog.dialog( "open" );
 		});
 
-		$( "#open-datepicker" ).click(function() {
+		$( "#open-datepicker" ).on( "click", function() {
 			datepickerDialog.dialog( "open" );
 		});
 
-		$( "#open-autocomplete" ).click(function() {
+		$( "#open-autocomplete" ).on( "click", function() {
 			autocompleteDialog.dialog( "open" );
 		});
 
@@ -86,13 +65,12 @@
 			]
 		});
 
-		$( "#destroy-dialog" ).click(function() {
+		$( "#destroy-dialog" ).on( "click", function() {
 			dialog.dialog( "destroy" ).show();
 			$( this ).remove();
 		});
 
 		$( document ).tooltip();
-	});
 	</script>
 </head>
 <body>

@@ -1,5 +1,6 @@
 module.exports = function( Release ) {
 
+var crypto = require( "crypto" );
 var shell = require( "shelljs" ),
 	path = require( "path" ),
 	fs = require( "fs" );
@@ -9,7 +10,7 @@ function replaceAtVersion() {
 	var matches = [];
 
 	function recurse( folder ) {
-		fs.readdirSync( folder ).forEach(function( fileName ) {
+		fs.readdirSync( folder ).forEach( function( fileName ) {
 			var content,
 				fullPath = folder + "/" + fileName;
 			if ( fs.statSync( fullPath ).isDirectory() ) {
@@ -18,13 +19,13 @@ function replaceAtVersion() {
 			}
 			content = fs.readFileSync( fullPath, {
 				encoding: "utf-8"
-			});
+			} );
 			if ( !/@VERSION/.test( content ) ) {
 				return;
 			}
 			matches.push( fullPath );
 			fs.writeFileSync( fullPath, content.replace( /@VERSION/g, Release.newVersion ) );
-		});
+		} );
 	}
 
 	[ "ui", "themes" ].forEach( recurse );
@@ -34,46 +35,77 @@ function replaceAtVersion() {
 	return matches;
 }
 
-function buildCDNPackage( callback ) {
-	console.log( "Building CDN package" );
-	var downloadBuilder = require( "download.jqueryui.com" ),
-		jqueryUi = new downloadBuilder.JqueryUi( path.resolve( "." ) ),
-		builder = new downloadBuilder.Builder( jqueryUi, ":all:" ),
-		packer = new downloadBuilder.ThemesPacker( builder, {
-			includeJs: true
-		}),
-		target = "../" + jqueryUi.pkg.name + "-" + jqueryUi.pkg.version + "-cdn.zip";
-
-	// Zip dir structure must be flat, override default base folder
-	packer.basedir = "";
-	packer.zipTo( target, function( error ) {
-		if ( error ) {
-			Release.abort( "Failed to zip CDN package", error );
+function removeExternals ( packager ) {
+	Object.keys( packager.builtFiles ).forEach( function( filepath ) {
+		if ( /^external\//.test( filepath ) ) {
+			delete packager.builtFiles[ filepath ];
 		}
-		callback();
-	});
+	} );
 }
 
-Release.define({
+function addManifest( packager ) {
+	var output = packager.builtFiles;
+	output.MANIFEST = Object.keys( output ).sort( function( a, b ) {
+		return a.localeCompare( b );
+	} ).map( function( filepath ) {
+		var md5 = crypto.createHash( "md5" );
+		md5.update( output[ filepath ] );
+		return filepath + " " + md5.digest( "hex" );
+	} ).join( "\n" );
+}
+
+function buildCDNPackage( callback ) {
+	console.log( "Building CDN package" );
+	var JqueryUi = require( "download.jqueryui.com/lib/jquery-ui" );
+	var Package = require( "download.jqueryui.com/lib/package-1-12-themes" );
+	var Packager = require( "node-packager" );
+	var jqueryUi = new JqueryUi( path.resolve( "." ) );
+	var target = fs.createWriteStream( "../" + jqueryUi.pkg.name + "-" + jqueryUi.pkg.version +
+		"-cdn.zip" );
+	var packager = new Packager( jqueryUi.files().cache, Package, {
+		components: jqueryUi.components().map( function( component ) {
+			return component.name;
+		} ),
+		jqueryUi: jqueryUi,
+		themeVars: null
+	} );
+	packager.ready.then( function() {
+		removeExternals( packager );
+		addManifest( packager );
+		packager.toZip( target, {
+			basedir: ""
+		}, function( error ) {
+			if ( error ) {
+				Release.abort( "Failed to zip CDN package", error );
+			}
+			callback();
+		} );
+	} );
+}
+
+Release.define( {
+	npmPublish: true,
 	issueTracker: "trac",
 	contributorReportId: 22,
 	changelogShell: function() {
 		var monthNames = [ "January", "February", "March", "April", "May", "June", "July",
-			"August", "September", "October", "November", "December" ],
+				"August", "September", "October", "November", "December" ],
 			now = new Date();
 		return "<script>{\n\t\"title\": \"jQuery UI " + Release.newVersion + " Changelog\"\n" +
-			"}</script>\n\nReleased on " + monthNames[ now.getMonth() ] + " " + now.getDate() + ", " + now.getFullYear() + "\n\n";
+			"}</script>\n\nReleased on " + monthNames[ now.getMonth() ] + " " + now.getDate() +
+			", " + now.getFullYear() + "\n\n";
 	},
 	generateArtifacts: function( fn ) {
-		var files;
-		function copyCdnFiles() {
+		var files = replaceAtVersion();
+
+		buildCDNPackage( function copyCdnFiles() {
 			var zipFile = shell.ls( "../jquery*-cdn.zip" )[ 0 ],
 				tmpFolder = "../tmp-zip-output",
 				unzipCommand = "unzip -o " + zipFile + " -d " + tmpFolder;
 
 			console.log( "Unzipping for dist/cdn copies" );
 			shell.mkdir( "-p", tmpFolder );
-			Release.exec({
+			Release.exec( {
 				command: unzipCommand,
 				silent: true
 			}, "Failed to unzip cdn files" );
@@ -82,17 +114,14 @@ Release.define({
 			shell.cp( tmpFolder + "/jquery-ui*.js", "dist/cdn" );
 			shell.cp( "-r", tmpFolder + "/themes", "dist/cdn" );
 			fn( files );
-		}
-
-		Release.exec( "grunt manifest" );
-		files = shell.ls( "*.jquery.json" ).concat( replaceAtVersion() );
-		buildCDNPackage( copyCdnFiles );
+		} );
 	}
-});
+} );
 
 };
 
 module.exports.dependencies = [
-	"download.jqueryui.com@2.0.5",
+	"download.jqueryui.com@2.1.2",
+	"node-packager@0.0.6",
 	"shelljs@0.2.6"
 ];

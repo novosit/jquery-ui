@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Slider - Multiple sliders</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
-	<script src="../../jquery.js"></script>
+	<script src="../../external/jquery/jquery.js"></script>
 	<script src="../../ui/core.js"></script>
 	<script src="../../ui/widget.js"></script>
 	<script src="../../ui/mouse.js"></script>
@@ -15,8 +16,8 @@
 		height:120px; float:left; margin:15px
 	}
 	</style>
-	<script>
-	$(function() {
+	<script src="../../external/requirejs/require.js"></script>
+	<script src="../bootstrap.js">
 		// setup master volume
 		$( "#master" ).slider({
 			value: 60,
@@ -35,7 +36,6 @@
 				orientation: "vertical"
 			});
 		});
-	});
 	</script>
 </head>
 <body>

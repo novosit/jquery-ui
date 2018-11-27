@@ -4,38 +4,10 @@
 	<meta charset="utf-8">
 	<title>jQuery UI Effects Test Suite</title>
 
-	<script src="../../jquery.js"></script>
-	<link rel="stylesheet" href="../../../external/qunit.css">
-	<script src="../../../external/qunit.js"></script>
-	<script src="../../jquery.simulate.js"></script>
-	<script src="../testsuite.js"></script>
-	<script>
-	TestHelpers.loadResources({
-		js: [
-			"ui/effect.js",
-			"ui/effect-blind.js",
-			"ui/effect-bounce.js",
-			"ui/effect-clip.js",
-			"ui/effect-drop.js",
-			"ui/effect-explode.js",
-			"ui/effect-fade.js",
-			"ui/effect-fold.js",
-			"ui/effect-highlight.js",
-			"ui/effect-puff.js",
-			"ui/effect-pulsate.js",
-			"ui/effect-scale.js",
-			"ui/effect-shake.js",
-			"ui/effect-size.js",
-			"ui/effect-slide.js",
-			"ui/effect-transfer.js"
-		]
-	});
+	<script src="../../../external/requirejs/require.js"></script>
+	<script src="../../lib/css.js"></script>
+	<script src="../../lib/bootstrap.js" data-modules="core scale">
 	</script>
-
-	<script src="effects_core.js"></script>
-	<script src="effects_scale.js"></script>
-
-	<script src="../swarminject.js"></script>
 	<style>
 	#qunit-fixture {
 		width: 1000px;
@@ -88,28 +60,47 @@
 		width: 100px;
 	}
 
+	.relative {
+		position: relative;
+		top: 0px;
+		left: 0px;
+	}
+	.absolute {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+	}
+	.fixed {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+	}
+	.static {
+		position: static;
+	}
+
 	</style>
 </head>
 <body>
 
 <div id="qunit"></div>
 <div id="qunit-fixture">
-<div id="elem" class="test">
-</div>
-<div class="hidden test">
-	<div>.</div>
-</div>
-<div class="animateClass test">
-	<h2>Child Element Test</h2>
-</div>
-<div class="relWidth relHeight testAddBorder">
-	<h2>Slide with relative width</h2>
-</div>
-<div class="testScale">
-</div>
-<div class="ticket7106">
-</div>
-
+	<div id="elem" class="test"></div>
+	<div class="hidden test">
+		<div>.</div>
+	</div>
+	<div class="animateClass test">
+		<h2>Child Element Test</h2>
+	</div>
+	<div class="relWidth relHeight testAddBorder">
+		<h2>Slide with relative width</h2>
+	</div>
+	<div class="testScale"></div>
+	<div class="ticket7106"></div>
+	<div class="relative"></div>
+	<div class="absolute"></div>
+	<div class="fixed"></div>
+	<div class="static"></div>
 </div>
 </body>
 </html>

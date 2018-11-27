@@ -5,25 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Selectmenu - Default functionality</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
-	<script src="../../jquery.js"></script>
-	<script src="../../ui/core.js"></script>
-	<script src="../../ui/widget.js"></script>
-	<script src="../../ui/position.js"></script>
-	<script src="../../ui/menu.js"></script>
-	<script src="../../ui/selectmenu.js"></script>
 	<link rel="stylesheet" href="../demos.css">
-	<script>
-	$(function() {
-		$( "#speed" ).selectmenu();
-
-		$( "#files" ).selectmenu();
-
-		$( "#number" )
-			.selectmenu()
-			.selectmenu( "menuWidget" )
-				.addClass( "overflow" );
-	});
-	</script>
 	<style>
 		fieldset {
 			border: 0;
@@ -32,13 +14,23 @@
 			display: block;
 			margin: 30px 0 0 0;
 		}
-		select {
-			width: 200px;
-		}
 		.overflow {
 			height: 200px;
 		}
 	</style>
+	<script src="../../external/requirejs/require.js"></script>
+	<script src="../bootstrap.js">
+		$( "#speed" ).selectmenu();
+
+		$( "#files" ).selectmenu();
+
+		$( "#number" )
+			.selectmenu()
+			.selectmenu( "menuWidget" )
+				.addClass( "overflow" );
+
+		$( "#salutation" ).selectmenu();
+	</script>
 </head>
 <body>
 
@@ -89,6 +81,16 @@
 			<option>17</option>
 			<option>18</option>
 			<option>19</option>
+		</select>
+
+		<label for="salutation">Select a title</label>
+		<select name="salutation" id="salutation">
+			<option disabled selected>Please pick one</option>
+			<option>Mr.</option>
+			<option>Mrs.</option>
+			<option>Dr.</option>
+			<option>Prof.</option>
+			<option>Other</option>
 		</select>
 	</fieldset>
 

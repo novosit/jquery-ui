@@ -2,21 +2,18 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Datepicker - Icon trigger</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
-	<script src="../../jquery.js"></script>
-	<script src="../../ui/core.js"></script>
-	<script src="../../ui/widget.js"></script>
-	<script src="../../ui/datepicker.js"></script>
 	<link rel="stylesheet" href="../demos.css">
-	<script>
-	$(function() {
+	<script src="../../external/requirejs/require.js"></script>
+	<script src="../bootstrap.js">
 		$( "#datepicker" ).datepicker({
 			showOn: "button",
 			buttonImage: "images/calendar.gif",
-			buttonImageOnly: true
+			buttonImageOnly: true,
+			buttonText: "Select date"
 		});
-	});
 	</script>
 </head>
 <body>

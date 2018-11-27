@@ -2,16 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Autocomplete - Combobox</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
-	<script src="../../jquery.js"></script>
-	<script src="../../ui/core.js"></script>
-	<script src="../../ui/widget.js"></script>
-	<script src="../../ui/button.js"></script>
-	<script src="../../ui/position.js"></script>
-	<script src="../../ui/menu.js"></script>
-	<script src="../../ui/autocomplete.js"></script>
-	<script src="../../ui/tooltip.js"></script>
 	<link rel="stylesheet" href="../demos.css">
 	<style>
 	.custom-combobox {
@@ -24,17 +17,14 @@
 		bottom: 0;
 		margin-left: -1px;
 		padding: 0;
-		/* support: IE7 */
-		*height: 1.7em;
-		*top: 0.1em;
 	}
 	.custom-combobox-input {
 		margin: 0;
-		padding: 0.3em;
+		padding: 5px 10px;
 	}
 	</style>
-	<script>
-	(function( $ ) {
+	<script src="../../external/requirejs/require.js"></script>
+	<script src="../bootstrap.js" data-modules="tooltip button">
 		$.widget( "custom.combobox", {
 			_create: function() {
 				this.wrapper = $( "<span>" )
@@ -58,10 +48,12 @@
 					.autocomplete({
 						delay: 0,
 						minLength: 0,
-						source: $.proxy( this, "_source" )
+						source: this._source.bind( this )
 					})
 					.tooltip({
-						tooltipClass: "ui-state-highlight"
+						classes: {
+							"ui-tooltip": "ui-state-highlight"
+						}
 					});
 
 				this._on( this.input, {
@@ -93,11 +85,11 @@
 					})
 					.removeClass( "ui-corner-all" )
 					.addClass( "custom-combobox-toggle ui-corner-right" )
-					.mousedown(function() {
+					.on( "mousedown", function() {
 						wasOpen = input.autocomplete( "widget" ).is( ":visible" );
 					})
-					.click(function() {
-						input.focus();
+					.on( "click", function() {
+						input.trigger( "focus" );
 
 						// Close if already visible
 						if ( wasOpen ) {
@@ -162,14 +154,11 @@
 				this.element.show();
 			}
 		});
-	})( jQuery );
 
-	$(function() {
 		$( "#combobox" ).combobox();
-		$( "#toggle" ).click(function() {
+		$( "#toggle" ).on( "click", function() {
 			$( "#combobox" ).toggle();
 		});
-	});
 	</script>
 </head>
 <body>
